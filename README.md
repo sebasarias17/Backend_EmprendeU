@@ -15,7 +15,7 @@ Este repositorio contiene el backend del proyecto **Emprende U**, una plataforma
 ## Estructura del Backend
 
 ```
-Backend_EmprendeU_/
+Backend_EmprendeU/
 ├── src/
 │   ├── config/        
 │   ├── controllers/   
