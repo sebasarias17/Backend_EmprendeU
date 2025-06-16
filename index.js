@@ -1,6 +1,9 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const connectDB = require('./src/config/db');
+const productRoutes = require('./src/routes/product.routes');
+const userRoutes = require('./src/routes/user.routes');
+const categoryRoutes = require('./src/routes/category.routes');
+const reviewRoutes = require('./src/routes/review.routes');
 require('dotenv').config();
 
 //Creamos la app
@@ -19,6 +22,18 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('EmprendeU API is running...');
 }); 
+
+//Rutas API Usuario
+app.use('/api/users', userRoutes);
+
+//Rutas API Producto
+app.use('/api/products', productRoutes);
+
+//Rutas API Categoría
+app.use('/api/categories', categoryRoutes);
+
+//Rutas API Reseñas
+app.use('/api/reviews', reviewRoutes);
 
 //Iniciamos el servidor
 app.listen(PORT, () => {
