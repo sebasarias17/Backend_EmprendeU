@@ -14,8 +14,8 @@ const reviewSchema = new mongoose.Schema({
   rating: {
     type: Number,
     required: true,
-    min: [1, 'Rating must be between 1 and 5'],
-    max: [5, 'Rating must be between 1 and 5'],
+    min: [1, 'la calificacion debe estar entre 1 y 5'],
+    max: [5, 'La calificacion debe estar entre 1 y 5'],
   },
   comment: {
     type: String,

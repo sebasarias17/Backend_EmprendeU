@@ -13,12 +13,12 @@ const productSchema = new mongoose.Schema({
     price: {
         type: Number,
         required: true,
-        min: [0, 'Price must be a positive number'],
+        min: [0, 'El precio debe ser positivo'],
         validate: {
             validator: function(v) {
                 return v >= 0;
             },
-            message: props => `${props.value} is not a valid price!`
+            message: props => `${props.value} no es un precio valido!`
         }   
     },
     entrepreneur: {
@@ -42,7 +42,12 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: false,
         trim: true,
-    }
+    },
+    tags: [{
+      type: String,
+      trim: true,
+      lowercase: true,
+    }],
 }, {
     timestamps: true,
 });

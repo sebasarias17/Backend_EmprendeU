@@ -22,6 +22,9 @@ describe('User Model Test', () => {
       secondLastName: 'Smith',
       email: 'testuser@eafit.edu',
       password: 'password123',
+      phoneNumber: '+1234567890',
+      profileImage: 'http://example.com/profile.jpg',
+      isVerified: true,
       role: 'user',
     };
 
@@ -40,6 +43,9 @@ describe('User Model Test', () => {
         lastName: 'Email',
         email: 'baduser@gmail.com',
         password: '123456',
+        phoneNumber: '+1234567890',
+        profileImage: 'http://example.com/profile.jpg',
+        isVerified: false,
         role: 'user'
       });
       await badUser.save();
