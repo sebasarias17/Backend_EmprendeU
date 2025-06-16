@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -30,7 +31,7 @@ const userSchema = new mongoose.Schema({
             validator: function(v) {
                 return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.edu$/.test(v);
             },
-            message: props => `${props.value} is not a valid institutional email! Only .edu emails are accepted.`
+            message: props => `${props.value} no es un correo institucional válido! Solo los correos.edu son aceptados.`
         },
         trim: true,
     },
@@ -39,9 +40,28 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: 6,
     },
+    phoneNumber: {
+        type: String,
+        required: true,
+        validate: {
+          validator: function (v) {
+            return /^\+?[0-9]{7,15}$/.test(v);
+          },
+          message: props => `${props.value} Ingresa un número de celular válido!`,
+        },
+    },
+     profileImage: {
+        type: String,
+        trim: true,
+        default: '../../public/images/default-profile.png', 
+    },
+    isVerified: {
+        type: Boolean,
+        default: false,
+    },
     role:{
         type: String,
-        enum: ['admin', 'user', 'seller'],
+        enum: process.env.USER_ROLES.split(','),
         required: true,
         default: 'user',
     },

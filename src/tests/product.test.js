@@ -23,7 +23,8 @@ describe('Product Model Test', () => {
       entrepreneur: new mongoose.Types.ObjectId(),
       category: new mongoose.Types.ObjectId(),
       stockQuantity: 50,
-      imageUrl: 'http://example.com/image.jpg'
+      imageUrl: 'http://example.com/image.jpg',
+      tags: ['electronics', 'gadgets']
     };
 
     const product = new Product(productData);
@@ -41,14 +42,15 @@ describe('Product Model Test', () => {
         price: -10,
         entrepreneur: new mongoose.Types.ObjectId(),
         category: new mongoose.Types.ObjectId(),
-        stockQuantity: 10
+        stockQuantity: 10,
+        tags: ['test'],
       });
       await badProduct.save();
       throw new Error('Product should not have been saved');
     } catch (err) {
       expect(err).toBeDefined();
       expect(err.errors.price).toBeDefined();
-      expect(err.errors.price.message).toMatch(/positive number/);
+      expect(err.errors.price.message).toMatch(/positivo/);
     }
   });
 });

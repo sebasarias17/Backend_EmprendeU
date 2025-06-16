@@ -44,7 +44,7 @@ describe('Review Model Test', () => {
     } catch (err) {
       expect(err).toBeDefined();
       expect(err.errors.rating).toBeDefined();
-      expect(err.errors.rating.message).toMatch(/Rating must be between 1 and 5/);
+      expect(err.errors.rating.message).toMatch(/La calificacion debe estar entre 1 y 5/);
     }
   });
 });
