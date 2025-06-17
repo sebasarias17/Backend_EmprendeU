@@ -1,9 +1,9 @@
 const express = require('express');
 const connectDB = require('./src/config/db');
-const productRoutes = require('./src/routes/product.routes');
-const userRoutes = require('./src/routes/user.routes');
-const categoryRoutes = require('./src/routes/category.routes');
-const reviewRoutes = require('./src/routes/review.routes');
+const productRoutes = require('./src/routes/product');
+const userRoutes = require('./src/routes/user');
+const categoryRoutes = require('./src/routes/category');
+const reviewRoutes = require('./src/routes/review');
 require('dotenv').config();
 
 //Creamos la app

@@ -1,41 +1,38 @@
-const express = require('express');
-const router = express.Router();
+const Product = require('../models/product');
 
-const Product = require('../models/Product');
-
-router.post('/', async (req, res) => {
+// Crear producto
+exports.createProduct = async (req, res) => {
   try {
     const product = new Product(req.body);
     const saved = await product.save();
     res.status(201).json(saved);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(400).json({ error: "este producto ya existe." });
   }
-});
+};
 
-router.get('/', async (req, res) => {
+// Obtener productos por ID de usuario y filtro opcional por tag
+exports.getProductsByUser = async (req, res) => {
   try {
+    const { userId } = req.params;
     const { tag } = req.query;
+    const filter = { entrepreneur: userId };
 
-    const filter = tag ? { tags: { $in: [tag.toLowerCase()] } } : {};
-
+    if (tag) {
+      filter.tags = { $in: [tag.toLowerCase()] };
+    }
     const products = await Product.find(filter)
-      .populate({
-        path: 'entrepreneur',
-        select: 'firstName lastName' 
-      })
-      .populate({
-        path: 'category',
-        select: 'name'
-      });
-      
+      .populate('entrepreneur', 'firstName lastName')
+      .populate('category', 'name');
+
     res.json(products);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-});
+};
 
-router.get('/:id', async (req, res) => {
+// Obtener producto por ID
+exports.getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id)
       .populate({
@@ -43,7 +40,7 @@ router.get('/:id', async (req, res) => {
         select: 'firstName lastName'
       })
       .populate({
-        path: 'Category',
+        path: 'category', 
         select: 'name'
       });
 
@@ -53,9 +50,10 @@ router.get('/:id', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-});
+};
 
-router.put('/:id', async (req, res) => {
+// Actualizar producto
+exports.updateProduct = async (req, res) => {
   try {
     const updated = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!updated) return res.status(404).json({ error: 'Producto no encontrado' });
@@ -63,9 +61,10 @@ router.put('/:id', async (req, res) => {
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
-});
+};
 
-router.delete('/:id', async (req, res) => {
+// Eliminar producto
+exports.deleteProduct = async (req, res) => {
   try {
     const deleted = await Product.findByIdAndDelete(req.params.id);
     if (!deleted) return res.status(404).json({ error: 'Producto no encontrado' });
@@ -73,6 +72,4 @@ router.delete('/:id', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-});
-
-module.exports = router;
+};
